@@ -32,7 +32,7 @@ android {
             // to make the bug report more readable.
             minifyEnabled false
             shrinkResources false
-            debuggable false
+            debuggable true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules-optimize.pro'
             externalNativeBuild {
                 cmake {
