@@ -43,30 +43,6 @@ android {
                 doNotStrip "**/*.so"
             }
         }
-        release_stripped {
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules-optimize.pro'
-            externalNativeBuild {
-                cmake {
-                    arguments "-DCMAKE_BUILD_TYPE=Release"
-                }
-            }
-        }
-        debug {
-            minifyEnabled false
-            shrinkResources false
-            jniDebuggable true
-            debuggable true
-            externalNativeBuild {
-                cmake {
-                    arguments "-DCMAKE_BUILD_TYPE=Debug"
-                }
-            }
-            packagingOptions{
-                doNotStrip "**/*.so"
-            }
-        }
     }
     gradle.projectsEvaluated {
         tasks.withType(JavaCompile) {
