@@ -54,8 +54,8 @@ android {
         abi {
             enable true
             reset()
-            include 'x86', 'x86_64', 'armeabi-v7a', 'arm64-v8a' //select ABIs to build APKs for
-            universalApk true //generate an additional APK that contains all the ABIs
+            include 'arm64-v8a' //select ABIs to build APKs for
+            universalApk false //generate an additional APK that contains all the ABIs
         }
     }
      // map for the version code
