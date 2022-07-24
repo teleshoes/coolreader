@@ -5,7 +5,7 @@ echo \
   && signapk ~/signapk/certificate.pem ~/signapk/key.pk8 \
        ./app/build/outputs/apk/primary/release/app-primary-arm64-v8a-release-unsigned.apk \
        coolreader.apk \
-  && scp coolreader.apk root@`ipmagic sx`:/home/nemo/.local/share/waydroid/data/media/0/ \
+  && rsync -avP coolreader.apk root@`ipmagic sx`:/home/nemo/.local/share/waydroid/data/media/0/ \
   && ipmagic sx -s '
        wd shell "
          pm install -r -d /sdcard/coolreader.apk
