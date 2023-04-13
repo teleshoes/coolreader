@@ -75,6 +75,8 @@ public class TTSToolbarDlg implements Settings {
 	private final ImageButton forwardButton;
 	private final ImageButton stopButton;
 	private final ImageButton optionsButton;
+	private final ImageButton jumpBackButton;
+	private final ImageButton jumpForwardButton;
 	private final TextView mVolumeTextView;
 	private final TextView mSpeedTextView;
 	private final SeekBar mSbSpeed;
@@ -546,6 +548,8 @@ public class TTSToolbarDlg implements Settings {
 		forwardButton = panel.findViewById(R.id.tts_forward);
 		stopButton = panel.findViewById(R.id.tts_stop);
 		optionsButton = panel.findViewById(R.id.tts_options);
+		jumpBackButton = panel.findViewById(R.id.tts_jump_back);
+		jumpForwardButton = panel.findViewById(R.id.tts_jump_forward);
 
 		mWindow = new PopupWindow( context );
 		mWindow.setBackgroundDrawable(new BitmapDrawable());
@@ -555,6 +559,20 @@ public class TTSToolbarDlg implements Settings {
 				v -> mCoolReader.sendBroadcast(new Intent(TTSControlService.TTS_CONTROL_ACTION_PREV)));
 		forwardButton.setOnClickListener(
 				v -> mCoolReader.sendBroadcast(new Intent(TTSControlService.TTS_CONTROL_ACTION_NEXT)));
+		jumpBackButton.setOnClickListener(
+				v -> {
+					for(int i=0; i<20; i++){
+						mCoolReader.sendBroadcast(new Intent(TTSControlService.TTS_CONTROL_ACTION_PREV));
+					}
+				});
+		jumpForwardButton.setOnClickListener(
+				v -> {
+					for(int i=0; i<20; i++){
+						mCoolReader.sendBroadcast(new Intent(TTSControlService.TTS_CONTROL_ACTION_NEXT));
+					}
+				});
+		jumpBackButton.setVisibility(View.GONE);
+		jumpForwardButton.setVisibility(View.GONE);
 		optionsButton.setOnClickListener(v -> mTTSControl.bind(ttsbinder -> {
 			OptionsDialog dlg = new OptionsDialog(mCoolReader, OptionsDialog.Mode.TTS, null, null, ttsbinder);
 			dlg.show();
@@ -763,6 +781,8 @@ public class TTSToolbarDlg implements Settings {
 			forwardButton.setVisibility(View.GONE);
 			stopButton.setVisibility(View.GONE);
 			optionsButton.setVisibility(View.GONE);
+			jumpBackButton.setVisibility(View.GONE);
+			jumpForwardButton.setVisibility(View.GONE);
 
 			wordTimingCalcHandler.removeCallbacksAndMessages(null);
 			mCoolReader.showToast("matching audiobook word timings");
@@ -788,6 +808,9 @@ public class TTSToolbarDlg implements Settings {
 								forwardButton.setVisibility(View.VISIBLE);
 								stopButton.setVisibility(View.VISIBLE);
 								optionsButton.setVisibility(View.VISIBLE);
+
+								jumpBackButton.setVisibility(View.VISIBLE);
+								jumpForwardButton.setVisibility(View.VISIBLE);
 							});
 
 							if(callback != null){
@@ -796,8 +819,21 @@ public class TTSToolbarDlg implements Settings {
 						}
 				}
 			);
+
+			btnIncSpeed.setVisibility(View.GONE);
+			btnDecSpeed.setVisibility(View.GONE);
+			mSpeedTextView.setVisibility(View.GONE);
+			mSbSpeed.setVisibility(View.GONE);
 		}else{
 			wordTimingAudiobookMatcher = null;
+
+			btnIncSpeed.setVisibility(View.VISIBLE);
+			btnDecSpeed.setVisibility(View.VISIBLE);
+			mSpeedTextView.setVisibility(View.VISIBLE);
+			mSbSpeed.setVisibility(View.VISIBLE);
+
+			jumpBackButton.setVisibility(View.GONE);
+			jumpForwardButton.setVisibility(View.GONE);
 		}
 	}
 }

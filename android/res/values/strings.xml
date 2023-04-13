@@ -538,6 +538,8 @@
     <string name="tts_forward">Forward</string>
     <string name="tts_stop">Stop</string>
     <string name="tts_options">Options</string>
+    <string name="tts_jump_back">Jump Back</string>
+    <string name="tts_jump_forward">Jump Forward</string>
     <string name="tts_volume">Volume</string>
     <string name="tts_rate">Rate</string>
     <string name="tts_failed">Failure of speech synthesis</string>

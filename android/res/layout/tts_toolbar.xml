@@ -156,6 +156,33 @@
                 android:padding="1dp"
                 android:src="?attr/cr3_button_inc_drawable" />
 
+        <ImageButton
+                android:id="@+id/tts_jump_back"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dip"
+                android:layout_marginTop="2dip"
+                android:layout_marginRight="2dip"
+                android:layout_marginBottom="2dip"
+                android:layout_weight="1"
+                android:contentDescription="@string/tts_jump_back"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:src="?attr/cr3_button_prev_drawable" />
+
+        <ImageButton
+                android:id="@+id/tts_jump_forward"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dip"
+                android:layout_marginTop="2dip"
+                android:layout_marginRight="2dip"
+                android:layout_marginBottom="2dip"
+                android:layout_weight="1"
+                android:contentDescription="@string/tts_jump_forward"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:src="?attr/cr3_button_next_drawable" />
     </LinearLayout>
 
     <LinearLayout
