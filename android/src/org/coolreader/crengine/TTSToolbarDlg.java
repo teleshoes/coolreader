@@ -561,14 +561,18 @@ public class TTSToolbarDlg implements Settings {
 				v -> mCoolReader.sendBroadcast(new Intent(TTSControlService.TTS_CONTROL_ACTION_NEXT)));
 		jumpBackButton.setOnClickListener(
 				v -> {
+					pause();
 					for(int i=0; i<20; i++){
 						mCoolReader.sendBroadcast(new Intent(TTSControlService.TTS_CONTROL_ACTION_PREV));
+						moveSelection(ReaderCommand.DCMD_SELECT_PREV_SENTENCE, null);
 					}
 				});
 		jumpForwardButton.setOnClickListener(
 				v -> {
+					pause();
 					for(int i=0; i<20; i++){
 						mCoolReader.sendBroadcast(new Intent(TTSControlService.TTS_CONTROL_ACTION_NEXT));
+						moveSelection(ReaderCommand.DCMD_SELECT_NEXT_SENTENCE, null);
 					}
 				});
 		jumpBackButton.setVisibility(View.GONE);
