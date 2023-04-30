@@ -1,5 +1,5 @@
 echo \
-  && sudo ANDROID_SDK_ROOT=/usr/lib/android-sdk ./gradlew build \
+  && ANDROID_SDK_ROOT=/usr/lib/android-sdk ./gradlew build \
   && rm -f coolreader.apk coolreader.apk.idsig \
   && echo signing apk \
   && apksigner sign \
