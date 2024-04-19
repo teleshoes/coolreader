@@ -1,4 +1,5 @@
 echo \
+  && export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/ \
   && export ANDROID_SDK_ROOT=/usr/lib/android-sdk \
   && ./gradlew build \
   && rm -f coolreader.apk coolreader.apk.idsig \
