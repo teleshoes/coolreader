@@ -2429,6 +2429,7 @@ public class ReaderView implements android.view.SurfaceHolder.Callback, Settings
 						CRStateFileLogger.appendState("TTS_OFF");
 					});
 					ttsToolbar.setAppSettings(mSettings, null);
+					ttsToolbar.initAudiobookWordTimings(null);
 				}));
 			}
 			break;
@@ -3284,6 +3285,10 @@ public class ReaderView implements android.view.SurfaceHolder.Callback, Settings
 	public BookInfo getBookInfo() {
 		BackgroundThread.ensureGUI();
 		return mBookInfo;
+	}
+
+	public List<SentenceInfo> getAllSentences() {
+		return doc.getAllSentences();
 	}
 
 	private int mBatteryState = BATTERY_STATE_DISCHARGING;
