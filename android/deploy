@@ -12,6 +12,7 @@ echo \
   && ipmagic sx --rsync -avP coolreader.apk :/home/nemo/android_storage/ \
   && echo "
        pm uninstall org.coolreader;
+       mount /storage/emulated -o remount #update fuse for /sdcard
        pm install -r -d /sdcard/coolreader.apk;
        pm grant org.coolreader android.permission.READ_EXTERNAL_STORAGE;
        pm grant org.coolreader android.permission.WRITE_EXTERNAL_STORAGE;
