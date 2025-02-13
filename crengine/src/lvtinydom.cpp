@@ -12596,6 +12596,16 @@ bool isCharSentenceEndMark(lChar32 ch) {
     }
 }
 
+bool isCharDoubleQuoteEnd(lChar32 ch) {
+    switch (ch) {
+        case '"':       // QUOTATION MARK
+        case U'\x201d': // RIGHT DOUBLE QUOTATION MARK
+            return true;
+        default:
+            return false;
+    }
+}
+
 /// returns true if points to beginning of sentence
 bool ldomXPointerEx::isSentenceStart()
 {
@@ -12630,15 +12640,11 @@ bool ldomXPointerEx::isSentenceStart()
     if ( !IsUnicodeSpace(currCh) && IsUnicodeSpaceOrNull(prevCh) ) {
         if(prevNonSpace == 0 || isCharSentenceEndMark(prevNonSpace)){
             return true;
-        }
-        switch (prevNonSpace) {
-        case '"':       // QUOTATION MARK
-        case U'\x201d': // RIGHT DOUBLE QUOTATION MARK
+        }else if(isCharDoubleQuoteEnd(prevNonSpace)){
             if(isCharSentenceEndMark(prevPrevNonSpace)){
                 return true;
             }
-            break;
-        default:
+        }else{
             return false;
         }
     }
@@ -12662,16 +12668,10 @@ bool ldomXPointerEx::isSentenceEnd()
     if ( IsUnicodeSpaceOrNull(currCh) ) {
         if(prevCh == 0 || isCharSentenceEndMark(prevCh)){
             return true;
-        }
-        switch (prevCh) {
-        case '"':
-        case U'\x201d': // RIGHT DOUBLE QUOTATION MARK
+        }else if(isCharDoubleQuoteEnd(prevCh)){
             if(isCharSentenceEndMark(prevPrevCh)){
                 return true;
             }
-            break;
-        default:
-            break;
         }
     }
     // word is not ended with '.' or '!' or '?' or ';' or '...'
