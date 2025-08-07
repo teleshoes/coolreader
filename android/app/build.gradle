@@ -6,7 +6,7 @@ android {
     defaultConfig {
         applicationId "org.coolreader"
         minSdkVersion 4
-        targetSdkVersion 34
+        targetSdkVersion 29
         // When new version released, version code must be incremented at least by 8
         // for compatibility with ABI versioning of split apk (see below).
         versionCode 32570
@@ -32,35 +32,11 @@ android {
             // to make the bug report more readable.
             minifyEnabled false
             shrinkResources false
-            debuggable false
+            debuggable true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules-optimize.pro'
             externalNativeBuild {
                 cmake {
                     arguments "-DCMAKE_BUILD_TYPE=RelWithDebInfo"
-                }
-            }
-            packagingOptions{
-                doNotStrip "**/*.so"
-            }
-        }
-        release_stripped {
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules-optimize.pro'
-            externalNativeBuild {
-                cmake {
-                    arguments "-DCMAKE_BUILD_TYPE=Release"
-                }
-            }
-        }
-        debug {
-            minifyEnabled false
-            shrinkResources false
-            jniDebuggable true
-            debuggable true
-            externalNativeBuild {
-                cmake {
-                    arguments "-DCMAKE_BUILD_TYPE=Debug"
                 }
             }
             packagingOptions{
@@ -78,8 +54,8 @@ android {
         abi {
             enable true
             reset()
-            include 'x86', 'x86_64', 'armeabi-v7a', 'arm64-v8a' //select ABIs to build APKs for
-            universalApk true //generate an additional APK that contains all the ABIs
+            include 'arm64-v8a' //select ABIs to build APKs for
+            universalApk false //generate an additional APK that contains all the ABIs
         }
     }
      // map for the version code
