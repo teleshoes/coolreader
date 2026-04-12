@@ -10,7 +10,7 @@ android {
         targetSdkVersion 29
         // When new version released, version code must be incremented at least by 8
         // for compatibility with ABI versioning of split apk (see below).
-        versionCode 32570
+        versionCode 32590
         versionName "3.2.59-1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
