@@ -2,7 +2,6 @@ git checkout master
 git branch -D newmaster
 git checkout buggins/master -b newmaster
 for x in \
-  thirdparty_fix_android_sources \
   deploy-android-build-tweaks \
   cr_state_log_file \
   audiobook_in_tts \
