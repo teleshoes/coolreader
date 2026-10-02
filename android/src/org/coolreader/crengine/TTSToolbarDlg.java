@@ -51,6 +51,7 @@ import com.s_trace.motion_watchdog.MotionWatchdogHandler;
 
 import org.coolreader.CoolReader;
 import org.coolreader.R;
+import org.coolreader.crengine.CRStateFileLogger;
 import org.coolreader.tts.OnTTSStatusListener;
 import org.coolreader.tts.TTSControlBinder;
 import org.coolreader.tts.TTSControlService;
@@ -502,6 +503,7 @@ public class TTSToolbarDlg implements Settings {
 				public void onStateChanged(TTSControlService.State state) {
 					switch (state) {
 						case PLAYING:
+							CRStateFileLogger.appendState("TTS_PLAY");
 							isSpeaking = true;
 							BackgroundThread.instance().postGUI(() -> mPlayPauseButton.setImageResource(Utils.resolveResourceIdByAttr(mCoolReader, R.attr.ic_media_pause_drawable, R.drawable.ic_media_pause)));
 							if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR && mMotionTimeout > 0)
@@ -509,6 +511,7 @@ public class TTSToolbarDlg implements Settings {
 							break;
 						case PAUSED:
 						case STOPPED:
+							CRStateFileLogger.appendState("TTS_PAUSE");
 							isSpeaking = false;
 							BackgroundThread.instance().postGUI(() -> mPlayPauseButton.setImageResource(Utils.resolveResourceIdByAttr(mCoolReader, R.attr.ic_media_play_drawable, R.drawable.ic_media_play)));
 							if (mMotionWatchdog != null)
