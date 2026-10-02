@@ -94,6 +94,8 @@ public class TTSControlService extends BaseService {
 	private static final String NOTIFICATION_CHANNEL_ID = "CoolReader TTS C9";
 
 	public static final String TTS_CONTROL_ACTION_PREPARE = "org.coolreader.tts.prepare";
+	public static final String TTS_CONTROL_ACTION_PLAY = "org.coolreader.tts.tts_play";
+	public static final String TTS_CONTROL_ACTION_PAUSE = "org.coolreader.tts.tts_pause";
 	public static final String TTS_CONTROL_ACTION_PLAY_PAUSE = "org.coolreader.tts.tts_play_pause";
 	public static final String TTS_CONTROL_ACTION_NEXT = "org.coolreader.tts.tts_next";
 	public static final String TTS_CONTROL_ACTION_PREV = "org.coolreader.tts.tts_prev";
@@ -144,6 +146,24 @@ public class TTSControlService extends BaseService {
 			log.d("received action: " + action);
 			if (null != action) {
 				switch (action) {
+					case TTSControlService.TTS_CONTROL_ACTION_PLAY:
+						if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+							if (State.PLAYING != mState)
+								mMediaSessionCallback.onPlay();
+						} else {
+							if (State.PLAYING != mState)
+								playWrapper_api_less_than_21();
+						}
+						break;
+					case TTSControlService.TTS_CONTROL_ACTION_PAUSE:
+						if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+							if (State.PLAYING == mState)
+								mMediaSessionCallback.onPause();
+						} else {
+							if (State.PLAYING == mState)
+								pauseWrapper_api_less_than_21();
+						}
+						break;
 					case TTSControlService.TTS_CONTROL_ACTION_PLAY_PAUSE:
 						if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 							if (State.PLAYING == mState)
@@ -509,6 +529,8 @@ public class TTSControlService extends BaseService {
 			);
 		}
 		IntentFilter filter = new IntentFilter();
+		filter.addAction(TTS_CONTROL_ACTION_PLAY);
+		filter.addAction(TTS_CONTROL_ACTION_PAUSE);
 		filter.addAction(TTS_CONTROL_ACTION_PLAY_PAUSE);
 		filter.addAction(TTS_CONTROL_ACTION_NEXT);
 		filter.addAction(TTS_CONTROL_ACTION_PREV);
@@ -1486,9 +1508,19 @@ public class TTSControlService extends BaseService {
 				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
 					builder = builder.setLocalOnly(true);
 					// add actions
+					// play
+					PendingIntent playIntent = PendingIntent.getBroadcast(this, 0, new Intent(TTS_CONTROL_ACTION_PLAY), 0);
+					Notification.Action.Builder actionBld = new Notification.Action.Builder(R.drawable.ic_media_play, "", playIntent);
+					Notification.Action actionPlay = actionBld.build();
+					builder = builder.addAction(actionPlay);
+					// play/pause
+					PendingIntent pauseIntent = PendingIntent.getBroadcast(this, 0, new Intent(TTS_CONTROL_ACTION_PAUSE), 0);
+					actionBld = new Notification.Action.Builder(R.drawable.ic_media_pause, "", pauseIntent);
+					Notification.Action actionPause = actionBld.build();
+					builder = builder.addAction(actionPause);
 					// play/pause
 					PendingIntent playPauseIntent = PendingIntent.getBroadcast(this, 0, new Intent(TTS_CONTROL_ACTION_PLAY_PAUSE), 0);
-					Notification.Action.Builder actionBld = new Notification.Action.Builder(mState == State.PAUSED ? R.drawable.ic_media_play : R.drawable.ic_media_pause, "", playPauseIntent);
+					actionBld = new Notification.Action.Builder(mState == State.PAUSED ? R.drawable.ic_media_play : R.drawable.ic_media_pause, "", playPauseIntent);
 					Notification.Action actionPlayPause = actionBld.build();
 					builder = builder.addAction(actionPlayPause);
 					// prev
